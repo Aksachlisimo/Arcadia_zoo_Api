@@ -22,8 +22,6 @@ const pool = require('./models/db'); // PostgreSQL pool setup
 
 
 // Enable CORS (Cross-Origin Resource Sharing)
-const cors = require('cors');
-
 app.use(cors({
   origin: 'https://arcadiazoo1.netlify.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -247,6 +245,7 @@ app.post('/api/feeding-records', async (req, res) => {
 
 
 // Start the server
+const PORT = process.env.PORT || 5000; // Default to port 5000 if not defined
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
