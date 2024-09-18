@@ -1,5 +1,6 @@
 const pool = require('../models/db');
 
+// CRUD operations for services
 exports.getAllServices = async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM services');
@@ -9,12 +10,4 @@ exports.getAllServices = async (req, res) => {
   }
 };
 
-exports.createService = async (req, res) => {
-  const { name, description } = req.body;
-  try {
-    await pool.query('INSERT INTO services (name, description) VALUES ($1, $2)', [name, description]);
-    res.status(201).json({ message: 'Service created successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+// Add more functions for other CRUD operations

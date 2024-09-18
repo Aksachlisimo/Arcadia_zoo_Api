@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const serviceController = require('../controllers/serviceController');
 
+// Define routes
 router.get('/', serviceController.getAllServices);
-router.post('/', serviceController.createService);
+// Add more routes for CRUD operations
 
 module.exports = router;
