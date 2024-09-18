@@ -12,7 +12,7 @@ const pool = require('./models/db');
 
 // Middleware
 app.use(cors({
-  origin: 'https://arcadiazoo1.netlify.app',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));
