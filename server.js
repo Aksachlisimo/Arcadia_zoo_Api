@@ -2,14 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Connect to PostgreSQL
 const pool = require('./models/db');
 
 // Middleware
 app.use(cors({
-  origin: 'https://arcadiazoo1.netlify.app',
+  origin: 'https://arcadia-zoo-v1.onrender.com/',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));
