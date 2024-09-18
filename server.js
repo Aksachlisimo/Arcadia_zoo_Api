@@ -5,6 +5,8 @@ const bcryptjs = require('bcryptjs');
 // const Animal = require('./models/animal');
 const router = express.Router();
 const app = express();
+const PORT = process.env.PORT || 5000;
+
 
 // Connect to MongoDB
 // const mongoose = require('mongoose');
@@ -95,8 +97,8 @@ app.post('/increment-view/:id', async (req, res) => {
 module.exports = router;
 
 
-// API endpoint to get all services
-app.get('/api/services', async (req, res) => {
+//  endpoint to get all services
+app.get('/services', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM services');
     res.json(result.rows);
@@ -107,7 +109,7 @@ app.get('/api/services', async (req, res) => {
 });
 
 // Handle service modification
-app.post('/api/services', async (req, res) => {
+app.post('/services', async (req, res) => {
   const { name, description } = req.body;
   if (name && description) {
     try {
@@ -123,7 +125,7 @@ app.post('/api/services', async (req, res) => {
 });
 
 // Handle contact form submission
-app.post('/api/contact', async (req, res) => {
+app.post('/contact', async (req, res) => {
   const { title, description, email } = req.body;
   if (title && description && email) {
     try {
@@ -139,7 +141,7 @@ app.post('/api/contact', async (req, res) => {
 });
 
 // Handle reviews submission
-app.post('/api/reviews', async (req, res) => {
+app.post('/reviews', async (req, res) => {
   const { pseudo, review } = req.body;
 
   if (pseudo && review) {
@@ -157,7 +159,7 @@ app.post('/api/reviews', async (req, res) => {
 
 
 // Handle user login
-app.post('/api/login', async (req, res) => {
+app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -192,7 +194,7 @@ app.post('/api/login', async (req, res) => {
 //////////////////////////////////////////////////////////////////////
 
 // Handle veterinarian reports submission
-app.post('/api/vet-reports', async (req, res) => {
+app.post('/vet-reports', async (req, res) => {
   const { animalId, reportDate, reportText } = req.body;
 
   if (!animalId || !reportDate || !reportText) {
@@ -209,7 +211,7 @@ app.post('/api/vet-reports', async (req, res) => {
 });
 
 // Handle habitat comments submission
-app.post('/api/habitat-comments', async (req, res) => {
+app.post('/habitat-comments', async (req, res) => {
   const { habitatId, commentText } = req.body;
 
   if (!habitatId || !commentText) {
@@ -226,7 +228,7 @@ app.post('/api/habitat-comments', async (req, res) => {
 });
 
 // Handle feeding records submission
-app.post('/api/feeding-records', async (req, res) => {
+app.post('/feeding-records', async (req, res) => {
   const { animalId, feedingDate, feedingTime, foodType, foodQuantity } = req.body;
 
   if (!animalId || !feedingDate || !feedingTime || !foodType || !foodQuantity) {
@@ -245,7 +247,6 @@ app.post('/api/feeding-records', async (req, res) => {
 
 
 // Start the server
-const PORT = process.env.PORT || 5000; // Default to port 5000 if not defined
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
