@@ -2,10 +2,9 @@ const { Pool } = require('pg');
 
 // Create a new PostgreSQL client
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // Ensure this is set in your environment variables
-  ssl: {
-    rejectUnauthorized: false
-  }
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false // Use SSL only in production
 });
+
 
 module.exports = pool;
