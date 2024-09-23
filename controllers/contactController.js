@@ -1,7 +1,7 @@
 const pool = require('../models/db');
 
 exports.submitContact = async (req, res) => {
-    const { titre, description, email } = req.body;
+    const { title, description, email } = req.body;
   
     // Log the request body to verify data
     console.log('Attempting to submit contact...');

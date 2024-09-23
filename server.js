@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 require('dotenv').config();
 
@@ -17,6 +18,8 @@ app.use(cors({
   allowedHeaders: ['Content-Type']
 }));
 app.use(express.json());
+app.use(bodyParser.json());
+
 
 // Route files
 const animalRoutes = require('./routes/animalRoutes');
