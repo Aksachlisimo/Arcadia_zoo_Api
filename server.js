@@ -4,7 +4,6 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 require('dotenv').config();
-const contactRoutes = require('./routes/contactRoutes');
 
 
 
@@ -25,7 +24,7 @@ const animalRoutes = require('./routes/animalRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const userRoutes = require('./routes/userRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
-const contactController = require('./controllers/contactController');
+const contactRoutes = require('./routes/contactRoutes');
 
 
 // Use routes
@@ -33,7 +32,7 @@ app.use('/api/animals', animalRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/reviews', reviewRoutes);
-app.post('/api/contact', contactController.submitContact);
+app.use('/api/contact', contactRoutes);
 
 
 // Start the server
