@@ -9,7 +9,6 @@ require('dotenv').config();
 
 // Connect to PostgreSQL
 const pool = require('./models/db');
-console.log('Database URL:', process.env.DATABASE_URL);
 
 // Middleware
 app.use(cors({
