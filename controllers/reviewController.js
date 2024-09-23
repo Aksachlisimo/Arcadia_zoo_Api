@@ -4,8 +4,10 @@ exports.submitReview = async (req, res) => {
   const { pseudo, review } = req.body;
 
   // Log the request body to verify data
-  console.log("Request Body:", req.body);
-
+  console.log('Attempting to submit review...');
+  console.log('Database URL:', process.env.DATABASE_URL);
+  console.log('Request Body:', req.body);
+  
   try {
     await pool.query('INSERT INTO reviews (pseudo, review) VALUES ($1, $2)', [pseudo, review]);
     res.status(200).json({ message: 'Review submitted successfully' });
