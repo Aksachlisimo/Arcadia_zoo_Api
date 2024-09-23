@@ -4,11 +4,11 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 require('dotenv').config();
-console.log('Database URL:', process.env.DATABASE_URL);
 
 
 // Connect to PostgreSQL
 const pool = require('./models/db');
+console.log('Database URL:', process.env.DATABASE_URL);
 
 // Middleware
 app.use(cors({
