@@ -32,7 +32,7 @@ const contactRoutes = require('./routes/contactRoutes');
 // Use routes
 app.use('/api/animals', animalRoutes);
 app.use('/api/services', serviceRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api/login', userRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/contact', contactRoutes);
 
