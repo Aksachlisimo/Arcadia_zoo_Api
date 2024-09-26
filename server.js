@@ -31,6 +31,7 @@ const contactRoutes = require('./routes/contactRoutes');
 // Use routes
 app.use('/api/animals', animalRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/register', userRoutes); // Adding register route
 app.use('/api/login', userRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/contact', contactRoutes);

@@ -15,6 +15,9 @@ exports.register = async (req, res) => {
         // Hash the password before storing it
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        console.log('Hashed password:', hashedPassword); // <-- Add this line
+
+
         // Insert the new user into the database with the hashed password
         const result = await pool.query(
             'INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING *',
