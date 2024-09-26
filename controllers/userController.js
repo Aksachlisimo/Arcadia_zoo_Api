@@ -15,13 +15,12 @@ exports.register = async (req, res) => {
         // Hash the password before storing it
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insert the new user into the database
+        // Insert the new user into the database with the hashed password
         const result = await pool.query(
             'INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING *',
             [username, hashedPassword, role]
         );
 
-        // Respond with the newly created user data
         res.status(201).json({ message: 'User created successfully', user: result.rows[0] });
     } catch (err) {
         res.status(500).json({ error: err.message });
