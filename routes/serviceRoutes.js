@@ -4,6 +4,8 @@ const serviceController = require('../controllers/serviceController');
 
 // Define routes
 router.get('/', serviceController.getAllServices);
-// Add more routes for CRUD operations
+
+// Add POST route to create a new service
+router.post('/', serviceController.createService);
 
 module.exports = router;
