@@ -1,4 +1,4 @@
-const pool = require('../models/db');
+const Animal = require('../models/animal');
 
 // CRUD operations for animals
 exports.getAllAnimals = async (req, res) => {
@@ -59,6 +59,26 @@ exports.deleteAnimal = async (req, res) => {
       return res.status(404).json({ message: 'Animal not found' });
     }
     res.status(204).send(); // No content to send back
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Increment view count for an animal
+exports.incrementViewCount = async (req, res) => {
+  const animalId = req.params.id;
+
+  try {
+    const result = await pool.query(
+      'UPDATE animals SET views = views + 1 WHERE id = $1 RETURNING *',
+      [animalId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Animal not found' });
+    }
+
+    res.json(result.rows[0]); // Return the updated animal data
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

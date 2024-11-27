@@ -14,4 +14,8 @@ router.put('/:id', animalController.updateAnimal);
 // Add DELETE route for removing an animal
 router.delete('/:id', animalController.deleteAnimal);
 
+// Increment view count
+router.post('/increment-view/:id', animalController.incrementViewCount);
+
+
 module.exports = router;
