@@ -3,12 +3,11 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
+
 require('dotenv').config();
 
 
 
-// Connect to PostgreSQL
-const pool = require('./models/db');
 
 // Middleware
 app.use(cors({
