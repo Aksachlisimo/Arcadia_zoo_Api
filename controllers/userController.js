@@ -5,9 +5,9 @@ const bcrypt = require('bcryptjs');
 exports.register = async (req, res) => {
     const { username, password, role } = req.body;
 
-    // Input validation
+    // Validate input: role is required only for registration
     if (!username || !password || !role) {
-        return res.status(400).json({ message: 'Username, password, and role are required.' });
+        return res.status(400).json({ message: 'Username, password, and role are required for registration.' });
     }
 
     try {
@@ -34,29 +34,29 @@ exports.register = async (req, res) => {
 
 // Handle user login
 exports.login = async (req, res) => {
-  const { username, password } = req.body;
+    const { username, password } = req.body;
 
-  // Input validation
-  if (!username || !password) {
-      return res.status(400).json({ message: 'Username and password are required.' });
-  }
+    // Validate input: role is not required for login
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Username and password are required.' });
+    }
 
-  try {
-      const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    try {
+        const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
 
-      if (result.rows.length > 0) {
-          const user = result.rows[0];
+        if (result.rows.length > 0) {
+            const user = result.rows[0];
 
-          const match = await bcrypt.compare(password, user.password);
-          if (match) {
-              res.status(200).json({ message: 'Login successful', role: user.role });
-          } else {
-              res.status(401).json({ message: 'Invalid username or password' });
-          }
-      } else {
-          res.status(401).json({ message: 'Invalid username or password' });
-      }
-  } catch (err) {
-      res.status(500).json({ error: 'Server error. Please try again later.' });
-  }
+            const match = await bcrypt.compare(password, user.password);
+            if (match) {
+                res.status(200).json({ message: 'Login successful', role: user.role });
+            } else {
+                res.status(401).json({ message: 'Invalid username or password' });
+            }
+        } else {
+            res.status(401).json({ message: 'Invalid username or password' });
+        }
+    } catch (err) {
+        res.status(500).json({ error: 'Server error. Please try again later.' });
+    }
 };
