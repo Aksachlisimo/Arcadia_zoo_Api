@@ -5,6 +5,11 @@ const bcrypt = require('bcryptjs');
 exports.register = async (req, res) => {
     const { username, password, role } = req.body;
 
+    // Input validation
+    if (!username || !password || !role) {
+        return res.status(400).json({ message: 'Username, password, and role are required.' });
+    }
+
     try {
         // Check if the user already exists
         const existingUser = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
@@ -15,9 +20,6 @@ exports.register = async (req, res) => {
         // Hash the password before storing it
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        console.log('Hashed password:', hashedPassword); // <-- Add this line
-
-
         // Insert the new user into the database with the hashed password
         const result = await pool.query(
             'INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING *',
@@ -26,22 +28,26 @@ exports.register = async (req, res) => {
 
         res.status(201).json({ message: 'User created successfully', user: result.rows[0] });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: 'Server error. Please try again later.' });
     }
 };
 
 // Handle user login
 exports.login = async (req, res) => {
   const { username, password } = req.body;
+
+  // Input validation
+  if (!username || !password) {
+      return res.status(400).json({ message: 'Username and password are required.' });
+  }
+
   try {
       const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-      console.log('Query result:', result.rows); // Log the result of the query
 
       if (result.rows.length > 0) {
           const user = result.rows[0];
-          console.log('User found:', user); // Log the user found
+
           const match = await bcrypt.compare(password, user.password);
-          console.log('Password match:', match); // Log the result of password comparison
           if (match) {
               res.status(200).json({ message: 'Login successful', role: user.role });
           } else {
@@ -51,6 +57,6 @@ exports.login = async (req, res) => {
           res.status(401).json({ message: 'Invalid username or password' });
       }
   } catch (err) {
-      res.status(500).json({ error: err.message });
+      res.status(500).json({ error: 'Server error. Please try again later.' });
   }
 };
