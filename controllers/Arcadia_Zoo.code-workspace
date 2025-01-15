@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../Arcadia_Zoo"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Arcadia_Zoo"
+	}
+}

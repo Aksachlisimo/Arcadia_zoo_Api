@@ -1,39 +1,57 @@
+// server.js
+
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
+
+const https = require('https');
+const fs = require('fs');
+
+const sslOptions = {
+  key: fs.readFileSync('path/to/private.key'),
+  cert: fs.readFileSync('path/to/certificate.crt')
+};
+
+https.createServer(sslOptions, app).listen(PORT, () => {
+  console.log(`Serveur HTTPS en cours d'exécution sur le port ${PORT}`);
+});
 
 require('dotenv').config();
 
 // Middleware
 app.use(cors({
-  origin: '*',  // Update this for production as needed
+  origin: '*',  // Mettre à jour en production selon les besoins
 }));
-app.use(express.json());  // Use express.json() instead of bodyParser
+app.use(express.json());  // Utilise express.json() au lieu de bodyParser
 
-// Route files
+// Importation des fichiers de routes
 const animalRoutes = require('./routes/animalRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const userRoutes = require('./routes/userRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 
-// Use routes
+// Importation du middleware d'authentification
+const authenticateToken = require('./middleware/authMiddleware');
+
+// Utilisation des routes
 app.use('/api/animals', animalRoutes);
 app.use('/api/services', serviceRoutes);
-app.use('/api/register', userRoutes); // Adding register route
-app.use('/api/login', userRoutes);
-app.use('/api/reviews', reviewRoutes);
-app.use('/api/contact', contactRoutes);
+app.use('/api/register', userRoutes); // Route d'enregistrement
+app.use('/api/login', userRoutes);    // Route de connexion
 
-// Middleware for error handling
+// Routes protégées nécessitant une authentification
+app.use('/api/reviews', authenticateToken, reviewRoutes);
+app.use('/api/contact', authenticateToken, contactRoutes);
+
+// Middleware pour la gestion des erreurs
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something went wrong!');
+  res.status(500).send('Quelque chose a mal tourné !');
 });
 
-// Start the server
+// Démarrage du serveur
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Le serveur fonctionne sur le port ${PORT}`);
 });

@@ -10,7 +10,8 @@ mongoose.connect('mongodb://localhost:27017/arcadia_zoo', {
 const animalSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   description: {
     type: String,
